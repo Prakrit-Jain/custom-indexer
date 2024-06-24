@@ -1,6 +1,3 @@
-import {IndexerNode} from "./indexer/IndexerNode";
-import {FanoutNode} from "./fanout/FanoutNode";
-import {MetadataNode} from "./metadata/MetadataNode";
 
 const port = parseInt(process.env.PORT) || 8080
 const role = process.env.ROLE || "indexer"
@@ -27,48 +24,5 @@ const META_NFT_CONTRACT = "0xd0f9f556d5d470fcb6ead8c0d89122c504df19eb"
 const SOMNIA_AVATAR_CONTRACT = "0xfdadf685109db043ad0a811c1afc43ec1e060b7a"
 
 
-if(role === "indexer") {
-    const indexerServer = new IndexerNode([
-        {
-            name: "Ethereum",
-            providerUrl: "https://mainnet.infura.io/v3/56dcd43823d34252a3bf61d18c5005ba",
-            chainId: "1",
-            startBlock: 12000000,
-            batchSizePerFetch: 5000,
-            maxConcurrentFetches: 50,
-            nfts: [BAYC_CONTRACT, RUNES_CONTRACT, GRILLZ_CONTRACT, OTHERDEEDS_CONTRACT, MAYC_CONTRACT]
-        },
-        {
-            name: "Polygon",
-            providerUrl: "https://polygon-mainnet.infura.io/v3/56dcd43823d34252a3bf61d18c5005ba",
-            chainId: "137",
-            startBlock: 40449800,
-            batchSizePerFetch: 5000,
-            maxConcurrentFetches: 50,
-            nfts: [CYLINDER_FOLK_CONTRACT, GOLDEN_BLOB_CONTRACT, META_NFT_CONTRACT]
-        },
-        {
-            name : "Sepolia",
-            providerUrl: "https://sepolia.infura.io/v3/56dcd43823d34252a3bf61d18c5005ba",
-            chainId: "11155111",
-            startBlock: 5680000,
-            batchSizePerFetch: 5000,
-            maxConcurrentFetches: 50,
-            nfts: [SOMNIA_AVATAR_CONTRACT]
-        }
-    ], 10000, prefix)
-
-    indexerServer.start(port)
-}
-
-if(role === "fanout") {
-    const fanoutServer = new FanoutNode(prefix);
-    fanoutServer.start(port)
-}
-
-if(role === "metadata") {
-    const metadataServer = new MetadataNode(prefix);
-    metadataServer.start(port)
-}
 
 
