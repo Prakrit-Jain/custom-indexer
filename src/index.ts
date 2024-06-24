@@ -1,4 +1,5 @@
 import {IndexerNode} from "./indexer/IndexerNode";
+import {FanoutNode} from "./fanout/FanoutNode";
 
 const port = parseInt(process.env.PORT) || 8080
 const role = process.env.ROLE || "indexer"
@@ -57,6 +58,11 @@ if(role === "indexer") {
     ], 10000, prefix)
 
     indexerServer.start(port)
+}
+
+if(role === "fanout") {
+    const fanoutServer = new FanoutNode(prefix);
+    fanoutServer.start(port)
 }
 
 
