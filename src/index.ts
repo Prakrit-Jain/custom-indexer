@@ -1,5 +1,6 @@
 import {IndexerNode} from "./indexer/IndexerNode";
 import {FanoutNode} from "./fanout/FanoutNode";
+import {MetadataNode} from "./metadata/MetadataNode";
 
 const port = parseInt(process.env.PORT) || 8080
 const role = process.env.ROLE || "indexer"
@@ -63,6 +64,11 @@ if(role === "indexer") {
 if(role === "fanout") {
     const fanoutServer = new FanoutNode(prefix);
     fanoutServer.start(port)
+}
+
+if(role === "metadata") {
+    const metadataServer = new MetadataNode(prefix);
+    metadataServer.start(port)
 }
 
 
